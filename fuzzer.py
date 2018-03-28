@@ -19,12 +19,13 @@ apps = [
     "../../../../../usr/bin/atril"
     ]
 
+
+
 fuzz_output = "fuzz.pdf"
-log_file = "log.txt"
 
 FuzzFactor = 250
-# num_tests = 10000
-num_tests = 1
+num_tests = 10000
+
 ############# end configuration ######################
 
 import math
@@ -33,9 +34,92 @@ import string
 import subprocess
 import time
 
+log = []
+count = 0
+
 for i in range(num_tests):
     file_choice = random.choice(file_list)
     app = random.choice(apps)
+    found = False
+    index = 0
+    for j in range(len(file_list)):
+        if file_choice == file_list[j]:
+            index = j
+            break
+    if len(log) > 0:
+        for k in log:
+            if k[0] == index:
+                k[1] += 1
+                if app == apps[0]:
+                    k[2] += 1
+                else:
+                    k[3] += 1
+                found = True
+                break
+            elif k[0] == index:
+                k[1] += 1
+                if app == apps[0]:
+                    k[2] += 1
+                else:
+                    k[3] += 1
+                found = True
+                break
+            elif k[0] == index:
+                k[1] += 1
+                if app == apps[0]:
+                    k[2] += 1
+                else:
+                    k[3] += 1
+                found = True
+                break
+            elif k[0] == index:
+                k[1] += 1
+                if app == apps[0]:
+                    k[2] += 1
+                else:
+                    k[3] += 1
+                found = True
+                break
+    if found == False or len(log) == 0:
+        tmp = []
+        if index == 0:
+            tmp.append(0)
+            tmp.append(1)
+            if app == apps[0]:
+                tmp.append(1)
+                tmp.append(0)
+            else:
+                tmp.append(0)
+                tmp.append(1)
+        elif index == 1:
+            tmp.append(1)
+            tmp.append(1)
+            if app == apps[0]:
+                tmp.append(1)
+                tmp.append(0)
+            else:
+                tmp.append(0)
+                tmp.append(1)
+        elif index == 2:
+            tmp.append(2)
+            tmp.append(1)
+            if app == apps[0]:
+                tmp.append(1)
+                tmp.append(0)
+            else:
+                tmp.append(0)
+                tmp.append(1)
+        elif index == 3:
+            tmp.append(3)
+            tmp.append(1)
+            if app == apps[0]:
+                tmp.append(1)
+                tmp.append(0)
+            else:
+                tmp.append(0)
+                tmp.append(1)
+        log.append(tmp)
+
 
     buf = bytearray(open(file_choice, 'rb').read())
 
@@ -53,11 +137,21 @@ for i in range(num_tests):
 
     process = subprocess.Popen([app, fuzz_output])
 
-    print(process)
-    # open(log_file, 'w').write(process)
     time.sleep(1)
     crashed = process.poll()
     if not crashed:
         process.terminate()
+    count += 1
+    print('\n!!!!!!!!!!!!!!!!TEST ' + str(count) + ' END ' + file_choice + ', ' + app + '!!!!!!!!!!!!!!!!!!!!!!\n')
 
-    print('\n!!!!!!!!!!!!!!!!TEST END ' + file_choice + ', ' + app + '!!!!!!!!!!!!!!!!!!!!!!\n')
+print('\n')
+
+for i in range(len(log)):
+    if log[i][0] == 0:
+        print(file_list[0] + ' runs: ' + str(log[i][1]) + ', okular: ' + str(log[i][2]) + ', atril: ' + str(log[i][3]))
+    if log[i][0] == 1:
+        print(file_list[1] + ' runs: ' + str(log[i][1]) + ', okular: ' + str(log[i][2]) + ', atril: ' + str(log[i][3]))
+    if log[i][0] == 2:
+      print(file_list[2] + ' runs: ' + str(log[i][1]) + ', okular: ' + str(log[i][2]) + ', atril: ' + str(log[i][3]))
+    if log[i][0] == 3:
+        print(file_list[3] + ' runs: ' + str(log[i][1]) + ', okular: ' + str(log[i][2]) + ', atril: ' + str(log[i][3]))
