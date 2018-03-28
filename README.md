@@ -2,6 +2,8 @@
 
 Review of 40 runs
 
+atril and okular pdf viewer apps on ubuntu
+
 atril 
 
 tended to show more assertion errors per report (a lot)
@@ -83,8 +85,8 @@ Resume_Stromsland_Nest.pdf 				runs: 225, okular: 111, atril: 114
 
 If I want to run small batches I see that I would need to adjust the fuzz factor.
 
-I tried running to 10,000 a bit too early.  Ubuntu exited before it was finished and I had not yet implemented loop counting feature so I did not know how far I got.
+I tried running to 10,000 a bit too early.  Ubuntu exited before it was finished and I had not yet implemented loop counting feature so I did not know how far it got.
 
-I may try again not that it counts.
+I may try again now that it counts.
 
 
